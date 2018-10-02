@@ -1,7 +1,7 @@
 /// dia_edit_save();
 // return: n/a
 
-var t = ds_list_create();  
+var t = ds_list_create(); 
 with obj_dialog
 { if !exist 
      ds_list_add(t, id);
@@ -18,11 +18,13 @@ else
     for (var i = 0; i < ds_list_size(t); i++)
     { var v = t[| i];
       if is_undefined(v) continue;
-      if !instance_exists(v) continue;
-      data_write(v, f, v, 0);
+      if !instance_exists(v) continue;       
+      var l = ds_list_create();
+      ds_list_add(l, id);      
+      data_write(v, f, l);      
+      ds_list_destroy(l);
     }
-    
-    ds_list_destroy(t);
     file_text_close(f);      
   }
 } 
+ds_list_destroy(t); 

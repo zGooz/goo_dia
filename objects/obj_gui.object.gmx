@@ -652,6 +652,62 @@ global.ID = instance_create(mouse_x, mouse_y, obj_dialog);
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// gui
+
+if messagebox_get_click(global.Msg)
+{ global.Msg = noone;
+  exit;
+}
+
+var a = array_create(3);
+a[0] = asset_get_index("dia_edit_save");
+a[1] = asset_get_index("dia_edit_load");
+a[2] = asset_get_index("dia_edit_export");
+
+for (var j = 0; j &lt; array_length_1d(a); j++)
+{ var xx = 32 + 32 * j;
+
+  if point_in_rectangle(MOUSE_X, MOUSE_Y, xx, 16, xx + 16, 32)
+  { if script_exists(a[j])
+       script_execute(a[j]);
+       
+    exit; break;
+  }
+}
+
+with obj_dialog
+{ if point_in_rectangle(mouse_x, mouse_y, x, y, x + width, y + height)
+  &amp;&amp; !point_in_rectangle(mouse_x, mouse_y, x, y, x + SYM_H, y + SYM_H)
+  { global.ID = id;  
+    var cx = x + width - SYM_H;
+    var cy = y + height - SYM_H;
+    
+    if point_in_rectangle(mouse_x, mouse_y, cx, cy, cx + SYM_H, cy + SYM_H)
+       Shift = 1;
+       
+    break;
+  }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// dia
 
 with global.ID
@@ -767,6 +823,13 @@ with global.ID
       { var j = instance_create(mouse_x, mouse_y, obj_pointer); 
         j.number = i;
         j.parent = id;
+        var v = Active[| i];
+        
+        if !is_undefined(v) 
+        { if instance_exists(v)
+             v.exist = max(--v.exist, 0);
+        }
+        
         Active[| i] = j;
         break;
       }            
@@ -799,62 +862,6 @@ with global.ID
     ds_list_add(Path, p);
     Size = ds_list_size(List);
     height = (Size + 1) * SYM_H;     
-  }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// gui
-
-if messagebox_get_click(global.Msg)
-{ global.Msg = noone;
-  exit;
-}
-
-var a = array_create(3);
-a[0] = asset_get_index("dia_edit_save");
-a[1] = asset_get_index("dia_edit_load");
-a[2] = asset_get_index("dia_edit_export");
-
-for (var j = 0; j &lt; array_length_1d(a); j++)
-{ var xx = 32 + 32 * j;
-
-  if point_in_rectangle(MOUSE_X, MOUSE_Y, xx, 16, xx + 16, 32)
-  { if script_exists(a[j])
-       script_execute(a[j]);
-       
-    exit; break;
-  }
-}
-
-with obj_dialog
-{ if point_in_rectangle(mouse_x, mouse_y, x, y, x + width, y + height)
-  &amp;&amp; !point_in_rectangle(mouse_x, mouse_y, x, y, x + SYM_H, y + SYM_H)
-  { global.ID = id;  
-    var cx = x + width - SYM_H;
-    var cy = y + height - SYM_H;
-    
-    if point_in_rectangle(mouse_x, mouse_y, cx, cy, cx + SYM_H, cy + SYM_H)
-       Shift = 1;
-       
-    break;
   }
 }
 </string>

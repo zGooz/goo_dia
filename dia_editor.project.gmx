@@ -32,6 +32,9 @@
         <script>scripts\dia_edit_load.gml</script>
         <script>scripts\data_read.gml</script>
       </scripts>
+      <scripts name="extra">
+        <script>scripts\ds_list_plus_list.gml</script>
+      </scripts>
     </scripts>
     <scripts name="screen">
       <script>scripts\screen_set_mode_ext.gml</script>

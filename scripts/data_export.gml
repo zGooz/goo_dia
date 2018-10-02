@@ -1,17 +1,9 @@
-/// data_export(id, file, end, cmp)
+/// data_export(id, file)
 // return: 0
 
-var i = argument[0];
-var f = argument[1];
-
-var _i = noone;
-var c = 0;
-
-if argument_count > 2
-{ _i = argument[2];
-  c  = argument[3];
-}   
-if c && i == _i return 0;
+var i = argument0;
+var f = argument1;
+var d = argument2;   
 
 with i
 { file_text_write_real(f, Size);
@@ -33,7 +25,18 @@ with i
   
   for (var j = 0; j < Size; j++)
   { var v = Active[| j];
-    if is_undefined(v) continue;   
+    if is_undefined(v) continue; 
+    
+    for (var q = 0; q < ds_list_size(d); q++;)
+    { var z = d[| q];
+      if is_undefined(z) continue;  
+      
+      if z == v 
+      { file_text_write_real(f, EMPTY);
+        file_text_writeln(f);      
+        return 0; exit; break; 
+      }
+    }      
      
     if !instance_exists(v)  
     { file_text_write_real(f, EMPTY);
@@ -43,7 +46,11 @@ with i
     
     file_text_write_real(f, NOT_EMPTY);
     file_text_writeln(f);
-    data_export(v, f, _i, 1);  // warning recursion  
+    var l = ds_list_create();
+    ds_list_add(l, id);
+    var k = ds_list_plus_list(d, l, 1);    
+    data_export(v, f, k);  // warning recursion  
+    ds_list_destroy(k);
+    ds_list_destroy(l); 
   }        
-}   
-return 0;
+}        

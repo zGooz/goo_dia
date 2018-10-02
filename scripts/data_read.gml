@@ -23,8 +23,7 @@ with o
   height = (Size + 1) * SYM_H; 
 
   for (var i = 0; i < s; i++)
-  { List[| i] = file_text_read_string(f);
-    Active[| i] = noone;
+  { List[| i] = file_text_read_string(f); 
     var p = path_add();
     path_set_closed(p, 0);
     path_set_kind(p, 1);

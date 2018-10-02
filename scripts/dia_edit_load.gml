@@ -29,7 +29,6 @@ if f != ""
     
     for (var i = 0; i < s; i++)
     { o.List[| i] = file_text_read_string(f);
-      o.Active[| i] = noone;
       var p = path_add();
       path_set_closed(p, 0);
       path_set_kind(p, 1);
@@ -49,7 +48,7 @@ if f != ""
       file_text_readln(f);
       
       if g == NOT_EMPTY  
-         q = data_read(f);  // warning recursion 
+         q = data_read(f); 
       
       o.Active[| i] = q;
     }
